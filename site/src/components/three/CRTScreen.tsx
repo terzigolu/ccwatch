@@ -7,6 +7,16 @@ const AMBER = '#ffb000';
 const AMBER_DIM = '#806000';
 const AMBER_CREAM = '#fff8e1';
 
+// Layout constants — matched to HTML <StatuslineMock /> proportions
+const TOTAL_WIDTH = 3.6;
+const ROW_HEIGHT = 0.6;
+const ROW_GAP_X = 0.18; // horizontal gap between cells
+const LABEL_Y = 0.14; // top of cell (label + suffix)
+const VALUE_Y = -0.08; // below label (value or bar)
+const LABEL_FONT = 0.1;
+const VALUE_FONT = 0.16;
+const BAR_HEIGHT = 0.06;
+
 export function CRTScreen() {
   const enabledCells = useWizardStore((s) => s.enabledCells);
   const breakpoint = useWizardStore((s) => s.breakpoint);
@@ -18,7 +28,7 @@ export function CRTScreen() {
     return (
       <Text
         position={[0, 0, 0.01]}
-        fontSize={0.15}
+        fontSize={0.13}
         color={AMBER_DIM}
         anchorX="center"
         anchorY="middle"
@@ -28,29 +38,41 @@ export function CRTScreen() {
     );
   }
 
-  const rowHeight = 0.65;
-  const totalHeight = rows.length * rowHeight;
-  const startY = totalHeight / 2 - rowHeight / 2;
+  const totalHeight = rows.length * ROW_HEIGHT;
+  const startY = totalHeight / 2 - ROW_HEIGHT / 2;
 
   return (
     <group>
       {rows.map((row, rowIdx) => {
-        const y = startY - rowIdx * rowHeight;
-        const cellWidth = 3 / row.length;
-        const startX = -1.5 + cellWidth / 2;
+        const y = startY - rowIdx * ROW_HEIGHT;
+        const cellsInRow = row.length;
+        const cellWidth =
+          (TOTAL_WIDTH - ROW_GAP_X * (cellsInRow - 1)) / cellsInRow;
+        const rowStartX = -TOTAL_WIDTH / 2;
+        const isLast = rowIdx === rows.length - 1;
+
         return (
           <group key={rowIdx} position={[0, y, 0]}>
             {row.map((cellKey, cellIdx) => {
-              const x = startX + cellIdx * cellWidth;
+              const cellLeftX =
+                rowStartX + cellIdx * (cellWidth + ROW_GAP_X);
               return (
                 <CellGroup
                   key={cellKey}
                   cellKey={cellKey}
                   session={sessionMock}
-                  position={[x, 0, 0]}
+                  cellLeftX={cellLeftX}
+                  cellWidth={cellWidth}
                 />
               );
             })}
+            {/* Bottom divider — except last row */}
+            {!isLast && (
+              <mesh position={[0, -ROW_HEIGHT / 2 + 0.04, 0.005]}>
+                <planeGeometry args={[TOTAL_WIDTH, 0.005]} />
+                <meshBasicMaterial color={AMBER_DIM} transparent opacity={0.35} />
+              </mesh>
+            )}
           </group>
         );
       })}
@@ -58,97 +80,101 @@ export function CRTScreen() {
   );
 }
 
-interface CellGroupProps {
+interface CellProps {
   cellKey: CellKey;
   session: SessionMock;
-  position: [number, number, number];
+  cellLeftX: number;
+  cellWidth: number;
 }
 
-function CellGroup({ cellKey, session, position }: CellGroupProps) {
+function CellGroup({ cellKey, session, cellLeftX, cellWidth }: CellProps) {
   switch (cellKey) {
     case '5h':
       return (
-        <BarGroup
+        <BarCell
           label="5h"
           pct={session.quota5hUsedPct}
           suffix="2h 14m"
-          position={position}
+          cellLeftX={cellLeftX}
+          cellWidth={cellWidth}
         />
       );
     case '7d':
       return (
-        <BarGroup
+        <BarCell
           label="7d"
           pct={session.quota7dUsedPct}
           suffix="3d 02h"
-          position={position}
+          cellLeftX={cellLeftX}
+          cellWidth={cellWidth}
         />
       );
     case 'ctxbar':
       return (
-        <BarGroup
+        <BarCell
           label="ctx"
           pct={session.contextPct}
           suffix={`${session.contextPct}%`}
-          position={position}
+          cellLeftX={cellLeftX}
+          cellWidth={cellWidth}
         />
       );
     case 'session':
       return (
-        <CellGroupText
+        <TextCell
           label="session"
           value={`$${session.cost.toFixed(2)} · $${session.burnRatePerHour.toFixed(2)}/h`}
-          position={position}
+          cellLeftX={cellLeftX}
         />
       );
     case 'today':
       return (
-        <CellGroupText
+        <TextCell
           label="today"
           value={`$${session.cost.toFixed(2)}`}
-          position={position}
+          cellLeftX={cellLeftX}
         />
       );
     case 'history':
-      return <CellGroupText label="week" value="$12.40" position={position} />;
+      return <TextCell label="week" value="$12.40" cellLeftX={cellLeftX} />;
     case 'total':
-      return <CellGroupText label="total" value="$248.55" position={position} />;
+      return <TextCell label="total" value="$248.55" cellLeftX={cellLeftX} />;
     case 'model':
       return (
-        <CellGroupText
+        <TextCell
           label={`${session.contextPct}%`}
           value="sonnet-4-6"
-          position={position}
+          cellLeftX={cellLeftX}
         />
       );
   }
 }
 
-function CellGroupText({
+function TextCell({
   label,
   value,
-  position,
+  cellLeftX,
 }: {
   label: string;
   value: string;
-  position: [number, number, number];
+  cellLeftX: number;
 }) {
   return (
-    <group position={position}>
+    <group>
       <Text
-        position={[0, 0.15, 0.01]}
-        fontSize={0.13}
+        position={[cellLeftX, LABEL_Y, 0.01]}
+        fontSize={LABEL_FONT}
         color={AMBER_DIM}
-        anchorX="center"
+        anchorX="left"
         anchorY="middle"
       >
         {label.toUpperCase()}
       </Text>
       <Text
-        position={[0, -0.08, 0.01]}
-        fontSize={0.2}
+        position={[cellLeftX, VALUE_Y, 0.01]}
+        fontSize={VALUE_FONT}
         color={AMBER}
-        anchorX="center"
+        anchorX="left"
         anchorY="middle"
       >
         {value}
@@ -157,25 +183,26 @@ function CellGroupText({
   );
 }
 
-function BarGroup({
+function BarCell({
   label,
   pct,
   suffix,
-  position,
+  cellLeftX,
+  cellWidth,
 }: {
   label: string;
   pct: number;
   suffix: string;
-  position: [number, number, number];
+  cellLeftX: number;
+  cellWidth: number;
 }) {
   const barColor = pct < 50 ? AMBER : pct < 80 ? '#ff6700' : '#ff3030';
-  const BAR_WIDTH = 1.4;
-  const fillW = (Math.min(100, Math.max(0, pct)) / 100) * BAR_WIDTH;
+  const fillW = (Math.min(100, Math.max(0, pct)) / 100) * cellWidth;
   return (
-    <group position={position}>
+    <group>
       <Text
-        position={[-BAR_WIDTH / 2, 0.18, 0.01]}
-        fontSize={0.13}
+        position={[cellLeftX, LABEL_Y, 0.01]}
+        fontSize={LABEL_FONT}
         color={AMBER_DIM}
         anchorX="left"
         anchorY="middle"
@@ -183,20 +210,22 @@ function BarGroup({
         {label.toUpperCase()}
       </Text>
       <Text
-        position={[BAR_WIDTH / 2, 0.18, 0.01]}
-        fontSize={0.13}
+        position={[cellLeftX + cellWidth, LABEL_Y, 0.01]}
+        fontSize={LABEL_FONT}
         color={AMBER_CREAM}
         anchorX="right"
         anchorY="middle"
       >
         {suffix}
       </Text>
-      <mesh position={[0, -0.08, 0.01]}>
-        <planeGeometry args={[BAR_WIDTH, 0.1]} />
+      {/* Bar background — full cell width */}
+      <mesh position={[cellLeftX + cellWidth / 2, VALUE_Y, 0.01]}>
+        <planeGeometry args={[cellWidth, BAR_HEIGHT]} />
         <meshBasicMaterial color="#000" />
       </mesh>
-      <mesh position={[-BAR_WIDTH / 2 + fillW / 2, -0.08, 0.02]}>
-        <planeGeometry args={[fillW, 0.085]} />
+      {/* Bar fill — left-anchored */}
+      <mesh position={[cellLeftX + fillW / 2, VALUE_Y, 0.02]}>
+        <planeGeometry args={[fillW, BAR_HEIGHT * 0.85]} />
         <meshBasicMaterial color={barColor} toneMapped={false} />
       </mesh>
     </group>
