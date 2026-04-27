@@ -1,0 +1,7 @@
+node_modules/
+coverage/
+*.tsbuildinfo
+*.bak
+*.bak.*
+.DS_Store
+.env

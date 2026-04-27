@@ -1,0 +1,19 @@
+{
+  "name": "claudewatch",
+  "version": "1.0.0",
+  "description": "Fast cost & quota statusline for Claude Code with cached transcript scanning and a configurable context bar.",
+  "author": {
+    "name": "terzigolu"
+  },
+  "homepage": "https://github.com/terzigolu/claudewatch",
+  "repository": "https://github.com/terzigolu/claudewatch",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "statusline",
+    "cost-tracking",
+    "quota",
+    "context-bar",
+    "performance"
+  ]
+}
