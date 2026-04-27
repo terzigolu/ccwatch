@@ -52,11 +52,10 @@
 .crt-screen-content {
   position: absolute;
   inset: 0;
-  /* breathing room so content doesn't kiss the screen well edges */
-  padding: 0.75rem 1.25rem;
   display: flex;
   align-items: stretch;
   justify-content: stretch;
+  padding-inline: 1.25rem;
 }
 
 .crt-screen-content > * {
