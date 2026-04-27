@@ -1,10 +1,10 @@
 {
   "name": "claudewatch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fast cost & quota statusline for Claude Code with cached transcript scanning and a configurable context bar.",
   "type": "module",
   "bin": {
-    "claudewatch": "./bin/claudewatch-install.js"
+    "claudewatch": "bin/claudewatch-install.js"
   },
   "engines": {
     "node": ">=20"
@@ -37,7 +37,7 @@
   "homepage": "https://github.com/terzigolu/claudewatch",
   "repository": {
     "type": "git",
-    "url": "https://github.com/terzigolu/claudewatch.git"
+    "url": "git+https://github.com/terzigolu/claudewatch.git"
   },
   "bugs": {
     "url": "https://github.com/terzigolu/claudewatch/issues"
