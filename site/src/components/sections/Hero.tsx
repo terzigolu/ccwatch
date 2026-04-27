@@ -3,13 +3,15 @@ import { NeonButton } from '@/components/ui/NeonButton';
 import { GlitchText } from '@/components/ui/GlitchText';
 import { TerminalCursor } from '@/components/ui/TerminalCursor';
 import { hasWebGL } from '@/lib/webgl';
+import { CRTFrame } from './CRTFrame';
+import { StatuslineMock } from '@/components/ui/StatuslineMock';
 
 const CRTScene = lazy(() => import('@/components/three/CRTScene'));
 
 function ScenePlaceholder({ message }: { message: string }) {
   return (
-    <div className="flex h-full items-center justify-center">
-      <div className="text-center text-amber-dim">
+    <div className="flex h-full items-center justify-center text-amber-dim">
+      <div className="text-center">
         <div className="font-mono text-xs uppercase tracking-widest">{message}</div>
         <div className="mt-2 text-amber-primary/40">▢</div>
       </div>
@@ -27,20 +29,22 @@ export function Hero() {
   return (
     <section className="px-8 pt-16 pb-20">
       <div className="grid gap-12 lg:grid-cols-[55%_45%]">
-        {/* Left: 3D CRT scene with WebGL fallback + lazy boundary */}
-        <div className="aspect-[4/3] border border-amber-dim/40 bg-gradient-to-br from-amber-bg to-black/80 overflow-hidden">
-          {webglOk === null ? (
-            <ScenePlaceholder message="[ initializing ]" />
-          ) : webglOk ? (
-            <Suspense fallback={<ScenePlaceholder message="[ loading 3D ]" />}>
-              <CRTScene />
-            </Suspense>
-          ) : (
-            <ScenePlaceholder message="[ no WebGL — static mode ]" />
-          )}
+        {/* Left: CSS vintage monitor body wrapping a live 3D scene (or HTML fallback) */}
+        <div className="aspect-[4/3] flex items-center justify-center">
+          <CRTFrame>
+            {webglOk === null ? (
+              <ScenePlaceholder message="[ initializing ]" />
+            ) : webglOk ? (
+              <Suspense fallback={<ScenePlaceholder message="[ loading 3D ]" />}>
+                <CRTScene />
+              </Suspense>
+            ) : (
+              <StatuslineMock />
+            )}
+          </CRTFrame>
         </div>
 
-        {/* Right: copy + CTAs (unchanged from Plan 2) */}
+        {/* Right: copy + CTAs */}
         <div className="flex flex-col justify-center">
           <p className="font-mono text-xs uppercase tracking-widest text-amber-dim">
             [ ccwatch v1.0.1 ]

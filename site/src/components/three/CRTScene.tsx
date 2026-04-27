@@ -12,10 +12,10 @@ export function CRTScene() {
 
   return (
     <Canvas
-      camera={{ position: [0, 0, 5.5], fov: 38 }}
+      camera={{ position: [0, 0, 3.0], fov: 50 }}
       dpr={degraded ? 1 : Math.min(window.devicePixelRatio, 2)}
       gl={{ antialias: !degraded, alpha: false }}
-      style={{ background: '#0a0606' }}
+      style={{ background: '#060300' }}
     >
       <PerformanceMonitor
         onDecline={() => setDegraded(true)}
@@ -23,13 +23,13 @@ export function CRTScene() {
         bounds={() => [25, 60]}
       />
 
-      <ambientLight intensity={0.15} color="#1a0f00" />
+      <ambientLight intensity={0.2} color="#1a0f00" />
       <pointLight position={[2, 2, 4]} intensity={1.2} color="#ffb000" />
       <pointLight position={[-3, -1, 2]} intensity={0.3} color="#ff6700" />
 
       <Suspense fallback={null}>
-        <CRTMonitor rotate={!reduced} />
-        {!degraded && <DustParticles count={reduced ? 0 : 200} />}
+        <CRTMonitor />
+        {!degraded && <DustParticles count={reduced ? 0 : 120} />}
       </Suspense>
 
       {!degraded && <PostFX reduced={reduced} />}

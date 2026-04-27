@@ -28,7 +28,7 @@ export function CRTScreen() {
     );
   }
 
-  const rowHeight = 0.45;
+  const rowHeight = 0.65;
   const totalHeight = rows.length * rowHeight;
   const startY = totalHeight / 2 - rowHeight / 2;
 
@@ -136,8 +136,8 @@ function CellGroupText({
   return (
     <group position={position}>
       <Text
-        position={[0, 0.1, 0.01]}
-        fontSize={0.08}
+        position={[0, 0.15, 0.01]}
+        fontSize={0.13}
         color={AMBER_DIM}
         anchorX="center"
         anchorY="middle"
@@ -145,8 +145,8 @@ function CellGroupText({
         {label.toUpperCase()}
       </Text>
       <Text
-        position={[0, -0.05, 0.01]}
-        fontSize={0.13}
+        position={[0, -0.08, 0.01]}
+        fontSize={0.2}
         color={AMBER}
         anchorX="center"
         anchorY="middle"
@@ -169,12 +169,13 @@ function BarGroup({
   position: [number, number, number];
 }) {
   const barColor = pct < 50 ? AMBER : pct < 80 ? '#ff6700' : '#ff3030';
-  const fillWidth = (Math.min(100, Math.max(0, pct)) / 100) * 1.0;
+  const BAR_WIDTH = 1.4;
+  const fillW = (Math.min(100, Math.max(0, pct)) / 100) * BAR_WIDTH;
   return (
     <group position={position}>
       <Text
-        position={[-0.5, 0.12, 0.01]}
-        fontSize={0.08}
+        position={[-BAR_WIDTH / 2, 0.18, 0.01]}
+        fontSize={0.13}
         color={AMBER_DIM}
         anchorX="left"
         anchorY="middle"
@@ -182,20 +183,20 @@ function BarGroup({
         {label.toUpperCase()}
       </Text>
       <Text
-        position={[0.5, 0.12, 0.01]}
-        fontSize={0.08}
+        position={[BAR_WIDTH / 2, 0.18, 0.01]}
+        fontSize={0.13}
         color={AMBER_CREAM}
         anchorX="right"
         anchorY="middle"
       >
         {suffix}
       </Text>
-      <mesh position={[0, -0.05, 0.01]}>
-        <planeGeometry args={[1.0, 0.06]} />
+      <mesh position={[0, -0.08, 0.01]}>
+        <planeGeometry args={[BAR_WIDTH, 0.1]} />
         <meshBasicMaterial color="#000" />
       </mesh>
-      <mesh position={[-0.5 + fillWidth / 2, -0.05, 0.02]}>
-        <planeGeometry args={[fillWidth, 0.05]} />
+      <mesh position={[-BAR_WIDTH / 2 + fillW / 2, -0.08, 0.02]}>
+        <planeGeometry args={[fillW, 0.085]} />
         <meshBasicMaterial color={barColor} toneMapped={false} />
       </mesh>
     </group>
