@@ -1,11 +1,11 @@
 ---
-description: Interactive wizard — choose which claudewatch statusline fields are visible
+description: Interactive wizard — choose which ccwatch statusline fields are visible
 allowed-tools: Read, Write, AskUserQuestion
 ---
 
-# claudewatch — Visibility Wizard
+# ccwatch — Visibility Wizard
 
-Walk the user through choosing which statusline cells they want visible, then write the result to `~/.claude/plugins/claudewatch/config.json`.
+Walk the user through choosing which statusline cells they want visible, then write the result to `~/.claude/plugins/ccwatch/config.json`.
 
 ## Available cells
 
@@ -22,7 +22,7 @@ Walk the user through choosing which statusline cells they want visible, then wr
 
 ## Procedure
 
-1. **Read the current config** at `~/.claude/plugins/claudewatch/config.json` (if it exists). Show the user the cells that are currently visible across `rows` and `compactRows` so they know the starting state.
+1. **Read the current config** at `~/.claude/plugins/ccwatch/config.json` (if it exists). Show the user the cells that are currently visible across `rows` and `compactRows` so they know the starting state.
 2. **Ask which cells the user wants visible** using AskUserQuestion. Use a single multi-select question listing all 8 cells with short labels. Note that on narrow terminals the layout collapses, so picking 3–4 cells is usually enough.
 3. **Ask layout shape** using AskUserQuestion with these options:
    - "two rows of two" → wide `[[a, b], [c, d]]`, compact `[[a, b], [c, d]]`
@@ -32,7 +32,7 @@ Walk the user through choosing which statusline cells they want visible, then wr
 4. **Build `rows` and `compactRows`** from selections. Drop unselected cells. If user picks fewer cells than the layout shape needs, shrink the layout to fit.
 5. **Preview** the resulting config in a fenced JSON block and ask the user to confirm with AskUserQuestion ("save", "edit again", "cancel").
 6. **On save**:
-   - Ensure directory `~/.claude/plugins/claudewatch/` exists.
+   - Ensure directory `~/.claude/plugins/ccwatch/` exists.
    - If `config.json` exists, copy it to `config.json.bak.<timestamp>` first.
    - Write the new config with 2-space indentation and a trailing newline.
    - Preserve any keys we didn't touch (e.g. `compactBreakpoint`, `columns`).

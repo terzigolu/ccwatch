@@ -4,11 +4,11 @@
     "name": "terzigolu"
   },
   "metadata": {
-    "description": "GitHub marketplace for the claudewatch Claude Code plugin."
+    "description": "GitHub marketplace for the ccwatch Claude Code plugin."
   },
   "plugins": [
     {
-      "name": "claudewatch",
+      "name": "ccwatch",
       "source": "./",
       "description": "Fast cost & quota statusline for Claude Code (cached, configurable visibility, context bar)."
     }

@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-// claudewatch — one-line installer for Claude Code.
-// Usage: npx claudewatch          (interactive)
-//        npx claudewatch install  (no prompt)
-//        npx claudewatch uninstall
+// ccwatch — one-line installer for Claude Code.
+// Usage: npx ccwatch          (interactive)
+//        npx ccwatch install  (no prompt)
+//        npx ccwatch uninstall
 //
 // Wires the plugin without needing /plugin marketplace add.
-// Copies this package's contents into ~/.claude/plugins/cache/terzigolu/claudewatch/<version>/
+// Copies this package's contents into ~/.claude/plugins/cache/terzigolu/ccwatch/<version>/
 // then patches ~/.claude/settings.json so statusLine.command points at the launcher.
 import { existsSync } from "node:fs";
 import { copyFile, cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
@@ -19,21 +19,21 @@ const PKG_JSON = JSON.parse(await readFile(path.join(PKG_ROOT, "package.json"), 
 const VERSION = PKG_JSON.version || "1.0.0";
 
 const HOME = os.homedir();
-const PLUGINS_CACHE = path.join(HOME, ".claude", "plugins", "cache", "terzigolu", "claudewatch");
+const PLUGINS_CACHE = path.join(HOME, ".claude", "plugins", "cache", "terzigolu", "ccwatch");
 const PLUGIN_DIR = path.join(PLUGINS_CACHE, VERSION);
 const SETTINGS_PATH = path.join(HOME, ".claude", "settings.json");
-const CONFIG_DIR = path.join(HOME, ".claude", "plugins", "claudewatch");
+const CONFIG_DIR = path.join(HOME, ".claude", "plugins", "ccwatch");
 const CONFIG_PATH = path.join(CONFIG_DIR, "config.json");
 
 const LAUNCHER_COMMAND =
   "sh -lc '" +
-  'PLUGIN_DIR=$(find "$HOME/.claude/plugins/cache" -mindepth 3 -maxdepth 3 -type d -path "*/claudewatch/*" 2>/dev/null | sort | tail -n 1); ' +
+  'PLUGIN_DIR=$(find "$HOME/.claude/plugins/cache" -mindepth 3 -maxdepth 3 -type d -path "*/ccwatch/*" 2>/dev/null | sort | tail -n 1); ' +
   '[ -n "$PLUGIN_DIR" ] || exit 0; ' +
   'exec node "$PLUGIN_DIR/dist/cli.js"' +
   "'";
 
 function log(msg) {
-  process.stdout.write(`[claudewatch] ${msg}\n`);
+  process.stdout.write(`[ccwatch] ${msg}\n`);
 }
 
 async function ensurePluginCopied() {
@@ -99,16 +99,16 @@ async function ensureConfig() {
 }
 
 async function install() {
-  log(`installing claudewatch v${VERSION}`);
+  log(`installing ccwatch v${VERSION}`);
   await ensurePluginCopied();
   await wireStatusline();
   await ensureConfig();
   log("done. open Claude Code — the statusline should appear immediately.");
-  log("run /claudewatch inside Claude Code to choose which fields are visible.");
+  log("run /ccwatch inside Claude Code to choose which fields are visible.");
 }
 
 async function uninstall() {
-  log("uninstalling claudewatch");
+  log("uninstalling ccwatch");
   if (existsSync(PLUGINS_CACHE)) {
     await rm(PLUGINS_CACHE, { recursive: true, force: true });
     log(`removed ${PLUGINS_CACHE}`);
@@ -128,10 +128,10 @@ if (cmd === "uninstall" || cmd === "remove") {
 } else if (cmd === "install" || cmd === undefined) {
   await install();
 } else if (cmd === "version" || cmd === "-v" || cmd === "--version") {
-  process.stdout.write(`claudewatch v${VERSION}\n`);
+  process.stdout.write(`ccwatch v${VERSION}\n`);
 } else {
   process.stdout.write(
-    "usage: npx claudewatch [install|uninstall|version]\n",
+    "usage: npx ccwatch [install|uninstall|version]\n",
   );
   process.exit(1);
 }

@@ -1,14 +1,14 @@
 {
-  "name": "claudewatch-dev",
+  "name": "ccwatch-dev",
   "owner": {
     "name": "terzigolu"
   },
   "metadata": {
-    "description": "Local development marketplace for the claudewatch Claude Code plugin."
+    "description": "Local development marketplace for the ccwatch Claude Code plugin."
   },
   "plugins": [
     {
-      "name": "claudewatch",
+      "name": "ccwatch",
       "source": "./",
       "description": "Fast cost & quota statusline for Claude Code (cached, configurable visibility, context bar)."
     }

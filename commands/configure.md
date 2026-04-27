@@ -1,13 +1,13 @@
 ---
-description: Edit claudewatch plugin config (advanced — for the interactive wizard use /claudewatch)
+description: Edit ccwatch plugin config (advanced — for the interactive wizard use /ccwatch)
 allowed-tools: Read, Write
 ---
 
-# Configure claudewatch (advanced)
+# Configure ccwatch (advanced)
 
-Edit `~/.claude/plugins/claudewatch/config.json` directly.
+Edit `~/.claude/plugins/ccwatch/config.json` directly.
 
-For the recommended interactive flow that asks the user which fields they want visible, run `/claudewatch` instead.
+For the recommended interactive flow that asks the user which fields they want visible, run `/ccwatch` instead.
 
 Rules:
 - If the file does not exist, create it.

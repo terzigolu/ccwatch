@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
 export const QUOTA_CACHE_TTL_MS = 30_000;
-export const QUOTA_CACHE_PATH = path.join(os.tmpdir(), "claudewatch-quota.json");
+export const QUOTA_CACHE_PATH = path.join(os.tmpdir(), "ccwatch-quota.json");
 export const QUOTA_API_ENDPOINT = "https://api.anthropic.com/api/oauth/usage";
 export const QUOTA_BETA_HEADER = "oauth-2025-04-20";
 const execFileAsync = promisify(execFile);

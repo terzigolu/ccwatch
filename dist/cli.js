@@ -81,13 +81,13 @@ export async function main(argv = process.argv.slice(2), io = createProcessIo())
     const command = argv[0] ?? "render";
     if (command === "setup") {
         await setupStatusline();
-        io.writeStdout("claudewatch statusline configured\n");
+        io.writeStdout("ccwatch statusline configured\n");
         return;
     }
     if (command === "repair") {
         const repaired = await repairStatusline();
         if (repaired) {
-            io.writeStdout("claudewatch statusline repaired\n");
+            io.writeStdout("ccwatch statusline repaired\n");
         }
         return;
     }
@@ -102,8 +102,8 @@ export async function main(argv = process.argv.slice(2), io = createProcessIo())
         return;
     }
     const input = JSON.parse(rawInput);
-    const config = await loadConfig(process.env.CLAUDEWATCH_CONFIG_PATH);
-    const projectsDir = process.env.CLAUDEWATCH_PROJECTS_DIR ?? path.join(os.homedir(), ".claude", "projects");
+    const config = await loadConfig(process.env.CCWATCH_CONFIG_PATH);
+    const projectsDir = process.env.CCWATCH_PROJECTS_DIR ?? path.join(os.homedir(), ".claude", "projects");
     const tokens = await scanTokenStats(projectsDir);
     const quota = await resolveRenderableQuota();
     const columns = resolveColumns(config.columns);

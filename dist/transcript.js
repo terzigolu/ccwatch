@@ -1,4 +1,4 @@
-// claudewatch — per-file mtime cache so the statusline doesn't rescan
+// ccwatch — per-file mtime cache so the statusline doesn't rescan
 // the entire ~/.claude/projects tree on every render. Cuts cold-render
 // time from ~3.7s to ~0.9s on a typical workstation.
 import { mkdir, readdir, readFile, stat, writeFile } from "node:fs/promises";
@@ -25,7 +25,7 @@ const ZERO_BUCKET = {
     all_cr_tok: 0,
     all_in_tok: 0,
 };
-const CACHE_DIR = path.join(os.homedir(), ".cache", "claudewatch");
+const CACHE_DIR = path.join(os.homedir(), ".cache", "ccwatch");
 const CACHE_PATH = path.join(CACHE_DIR, "transcript-cache.json");
 const CACHE_VERSION = 1;
 let _cache = null;

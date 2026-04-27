@@ -1,16 +1,16 @@
 ---
-description: Diagnose claudewatch plugin setup and statusline wiring
+description: Diagnose ccwatch plugin setup and statusline wiring
 allowed-tools: Read, Bash
 ---
 
-# Diagnose claudewatch
+# Diagnose ccwatch
 
 Check:
 - whether `~/.claude/settings.json` exists
 - whether `statusLine` is present
-- whether the configured command resolves to a `claudewatch` plugin install
-- whether a plugin install exists under `~/.claude/plugins/cache/*/claudewatch/*`
-- whether `~/.claude/plugins/claudewatch/config.json` exists and is valid JSON
+- whether the configured command resolves to a `ccwatch` plugin install
+- whether a plugin install exists under `~/.claude/plugins/cache/*/ccwatch/*`
+- whether `~/.claude/plugins/ccwatch/config.json` exists and is valid JSON
 
 Report:
 - current status

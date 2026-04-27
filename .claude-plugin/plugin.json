@@ -1,17 +1,17 @@
 {
-  "name": "claudewatch",
+  "name": "ccwatch",
   "version": "1.0.1",
   "description": "Fast cost & quota statusline for Claude Code with cached transcript scanning and a configurable context bar.",
   "author": {
     "name": "yajinn & terzigolu",
-    "url": "https://github.com/terzigolu/claudewatch"
+    "url": "https://github.com/terzigolu/ccwatch"
   },
   "contributors": [
     { "name": "yajinn", "url": "https://github.com/yajinn" },
     { "name": "terzigolu", "url": "https://github.com/terzigolu" }
   ],
-  "homepage": "https://github.com/terzigolu/claudewatch",
-  "repository": "https://github.com/terzigolu/claudewatch",
+  "homepage": "https://github.com/terzigolu/ccwatch",
+  "repository": "https://github.com/terzigolu/ccwatch",
   "license": "MIT",
   "keywords": [
     "claude-code",

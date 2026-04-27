@@ -1,31 +1,31 @@
-# claudewatch
+# ccwatch
 
 **Fast cost & quota statusline for Claude Code.** Cached transcript scanning, configurable visibility, dedicated context bar.
 
-[![npm](https://img.shields.io/npm/v/claudewatch?style=flat-square&color=blue)](https://www.npmjs.com/package/claudewatch)
+[![npm](https://img.shields.io/npm/v/ccwatch?style=flat-square&color=blue)](https://www.npmjs.com/package/ccwatch)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 
-![claudewatch preview](assets/preview.jpg)
+![ccwatch preview](assets/preview.jpg)
 
 ## One-line install
 
 ```bash
-npx claudewatch
+npx ccwatch
 ```
 
-That's it. Open Claude Code — the statusline appears immediately. Then run `/claudewatch` inside Claude Code to choose which fields you want visible.
+That's it. Open Claude Code — the statusline appears immediately. Then run `/ccwatch` inside Claude Code to choose which fields you want visible.
 
 To remove:
 
 ```bash
-npx claudewatch uninstall
+npx ccwatch uninstall
 ```
 
 ## Alternative: install as a Claude Code plugin
 
 ```
-/plugin marketplace add https://github.com/terzigolu/claudewatch
-/plugin install claudewatch
+/plugin marketplace add https://github.com/terzigolu/ccwatch
+/plugin install ccwatch
 /setup
 ```
 
@@ -38,20 +38,20 @@ npx claudewatch uninstall
 - **Dedicated context bar** (`ctxbar`) — separate progress bar for the context window, 0%→100%, color-graded.
 - **Lines changed** — `+250/-40` so you can see whether output justifies the spend.
 
-## Why claudewatch
+## Why ccwatch
 
-You're burning through API credits or a $200/month Max subscription — but Claude Code doesn't tell you how fast, which project, or what it'll cost by end of day. claudewatch fills that gap.
+You're burning through API credits or a $200/month Max subscription — but Claude Code doesn't tell you how fast, which project, or what it'll cost by end of day. ccwatch fills that gap.
 
 It works with **both billing models**: API (pay-per-token) or a Pro/Max subscription (quota-based). No guessing, no surprises at the end of the month.
 
-Two things that make claudewatch different:
+Two things that make ccwatch different:
 
-1. **It's fast.** Other statuslines rescan the entire `~/.claude/projects` tree (often 900 MB+) on every render. claudewatch caches per-file by `mtime + size`, so cold-render is **~0.9s** and warm-render is **~80ms** — the bar feels instant even on big histories.
-2. **You choose what's visible.** Run `/claudewatch` and a wizard walks you through which cells to show. Pick 4 or pick all 8.
+1. **It's fast.** Other statuslines rescan the entire `~/.claude/projects` tree (often 900 MB+) on every render. ccwatch caches per-file by `mtime + size`, so cold-render is **~0.9s** and warm-render is **~80ms** — the bar feels instant even on big histories.
+2. **You choose what's visible.** Run `/ccwatch` and a wizard walks you through which cells to show. Pick 4 or pick all 8.
 
 ## Configure visibility
 
-Run `/claudewatch` inside Claude Code. The wizard asks which cells you want visible and writes the result to `~/.claude/plugins/claudewatch/config.json`.
+Run `/ccwatch` inside Claude Code. The wizard asks which cells you want visible and writes the result to `~/.claude/plugins/ccwatch/config.json`.
 
 Available cells:
 
@@ -66,7 +66,7 @@ Available cells:
 | `model` | ctx% + model name + clock |
 | `ctxbar` | dedicated context-window progress bar |
 
-Or edit `~/.claude/plugins/claudewatch/config.json` by hand:
+Or edit `~/.claude/plugins/ccwatch/config.json` by hand:
 
 ```json
 {
@@ -79,17 +79,17 @@ Or edit `~/.claude/plugins/claudewatch/config.json` by hand:
 
 ## Accurate to the cent
 
-Most tools estimate costs with a flat rate. That's wrong — Opus output is **19x** more expensive than Haiku. claudewatch gets it right:
+Most tools estimate costs with a flat rate. That's wrong — Opus output is **19x** more expensive than Haiku. ccwatch gets it right:
 
 - **Per-model pricing** — reads the model ID from every message. Opus, Sonnet, Haiku each priced correctly.
-- **Streaming dedup** — each API call writes 2–7 JSONL entries. claudewatch deduplicates by `message.id`. Every message counted exactly once.
-- **Cache separation** — cache reads cost 10% of fresh input. claudewatch tracks them separately and shows ♻hit rate per project.
-- **Cross-session history** — session cost resets when you restart. Your bill doesn't. claudewatch scans all JSONL — today, this week, this month, per project.
+- **Streaming dedup** — each API call writes 2–7 JSONL entries. ccwatch deduplicates by `message.id`. Every message counted exactly once.
+- **Cache separation** — cache reads cost 10% of fresh input. ccwatch tracks them separately and shows ♻hit rate per project.
+- **Cross-session history** — session cost resets when you restart. Your bill doesn't. ccwatch scans all JSONL — today, this week, this month, per project.
 
 ## How it works
 
 ```
-stdin JSON → claudewatch CLI → cached scan of ~/.claude/projects/**/*.jsonl
+stdin JSON → ccwatch CLI → cached scan of ~/.claude/projects/**/*.jsonl
            → dedup by message.id → per-model pricing
            → adaptive layout → stdout
 ```
@@ -99,7 +99,7 @@ stdin JSON → claudewatch CLI → cached scan of ~/.claude/projects/**/*.jsonl
 
 ## Slash commands
 
-- `/claudewatch` — interactive visibility wizard (recommended)
+- `/ccwatch` — interactive visibility wizard (recommended)
 - `/setup` — re-wire `statusLine.command` if it drifts
 - `/configure` — edit config JSON directly (advanced)
 - `/doctor` — diagnose plugin install + statusline wiring
@@ -107,13 +107,13 @@ stdin JSON → claudewatch CLI → cached scan of ~/.claude/projects/**/*.jsonl
 ## Uninstall
 
 ```bash
-npx claudewatch uninstall
+npx ccwatch uninstall
 ```
 
 Or via Claude Code:
 
 ```
-/plugin remove claudewatch
+/plugin remove ccwatch
 ```
 
 ## Authors

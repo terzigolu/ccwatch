@@ -11,7 +11,7 @@ export const DEFAULT_COMPACT_LAYOUT = [
 ];
 export const DEFAULT_AUTO_COLUMNS = 110;
 export const DEFAULT_COMPACT_BREAKPOINT = 113;
-export const DEFAULT_CONFIG_PATH = path.join(os.homedir(), ".claude", "plugins", "claudewatch", "config.json");
+export const DEFAULT_CONFIG_PATH = path.join(os.homedir(), ".claude", "plugins", "ccwatch", "config.json");
 function parseRows(value) {
     if (!Array.isArray(value)) {
         return null;
