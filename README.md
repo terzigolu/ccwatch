@@ -2,10 +2,12 @@
 
 **Fast cost & quota statusline for Claude Code.** Cached transcript scanning, configurable visibility, dedicated context bar.
 
+🌐 **[watchstatus.bar](https://watchstatus.bar/)**
+
 [![npm](https://img.shields.io/npm/v/@terzigolu/ccwatch?style=flat-square&color=blue)](https://www.npmjs.com/package/@terzigolu/ccwatch)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 
-![ccwatch preview](assets/preview.jpg)
+![ccwatch preview](assets/ccwatch.gif)
 
 ## One-line install
 

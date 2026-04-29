@@ -1,6 +1,6 @@
 {
   "name": "@terzigolu/ccwatch",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "Fast cost & quota statusline for Claude Code with cached transcript scanning and a configurable context bar.",
   "type": "module",
   "bin": {
@@ -34,7 +34,7 @@
     "context-bar",
     "performance"
   ],
-  "homepage": "https://github.com/terzigolu/ccwatch",
+  "homepage": "https://watchstatus.bar/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/terzigolu/ccwatch.git"
